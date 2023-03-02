@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-
   final String title;
 
   @override
@@ -40,17 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
     printy();
     turnOnFlashLight();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -75,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     late String value;
     try {
       value = await platform.invokeMethod("Printy");
-    } catch(e) {
+    } catch (e) {
       print(e);
     }
     debugPrint(value);
@@ -84,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void turnOnFlashLight() async {
     late var value;
     try {
-      value = platform.invokeMethod("TurnFlashLightOn");
-    } catch(e) {
+      value = await platform.invokeMethod("TurnFlashLightOn");
+    } catch (e) {
       print(e);
     }
   }
