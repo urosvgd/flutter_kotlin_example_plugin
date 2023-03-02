@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static const platform = MethodChannel("com.flutter.epic/epic");
   int _counter = 0;
+  late int batteryStatus;
 
   void _incrementCounter() {
     setState(() {
@@ -60,10 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            onPressed: getBatteryStatus,
+            tooltip: 'Battery level',
+            child: const Icon(Icons.battery_0_bar),
+          ),
+          FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
@@ -82,6 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
     late var value;
     try {
       value = await platform.invokeMethod("TurnFlashLightOn");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getBatteryStatus() async {
+    late var value;
+    try {
+      value = await platform.invokeMethod("GetBatteryLevel");
     } catch (e) {
       print(e);
     }

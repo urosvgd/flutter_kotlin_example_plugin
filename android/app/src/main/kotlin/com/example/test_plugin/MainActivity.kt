@@ -11,6 +11,9 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
+import android.os.BatteryManager
+import android.widget.Toast
+
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "com.flutter.epic/epic"
@@ -24,6 +27,9 @@ class MainActivity: FlutterActivity() {
             }
             if(call.method == "TurnFlashLightOn") {
                 openFlashLight()
+            }
+            if(call.method == "GetBatteryLevel"){
+                getBatteryStatus();
             }
         }
     }
@@ -40,15 +46,21 @@ class MainActivity: FlutterActivity() {
                 cameraManager.setTorchMode(cameraId, true)
                 flashLightStatus = true
 
-            } catch (e: CameraAccessException) {
-            }
+            } catch (e: CameraAccessException) {}
         } else {
             try {
                 cameraManager.setTorchMode(cameraId, false)
                 flashLightStatus = false
-            } catch (e: CameraAccessException) {
-            }
+            } catch (e: CameraAccessException) {}
         }
+    }
 
+    private fun getBatteryStatus(): Int{
+        val bm = applicationContext.getSystemService(BATTERY_SERVICE) as BatteryManager
+        val batLevel:Int = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+  
+        // Display the variable using a Toast
+        Toast.makeText(applicationContext,"Battery is $batLevel%",Toast.LENGTH_LONG).show()
+        return batLevel
     }
 }
