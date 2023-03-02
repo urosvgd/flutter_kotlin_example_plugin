@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
-    printy();
-    turnOnFlashLight();
+    _printy();
+    _turnOnFlashLight();
   }
 
   @override
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-            onPressed: getBatteryStatus,
+            onPressed: _getBatteryStatus,
             tooltip: 'Battery level',
             child: const Icon(Icons.battery_0_bar),
           ),
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void printy() async {
+  void _printy() async {
     late String value;
     try {
       value = await platform.invokeMethod("Printy");
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint(value);
   }
 
-  void turnOnFlashLight() async {
+  void _turnOnFlashLight() async {
     late var value;
     try {
       value = await platform.invokeMethod("TurnFlashLightOn");
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void getBatteryStatus() async {
+  void _getBatteryStatus() async {
     late var value;
     try {
       value = await platform.invokeMethod("GetBatteryLevel");
